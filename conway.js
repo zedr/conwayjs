@@ -38,7 +38,9 @@ var doTick = function (universe) {
         neighbours;
 
     for (idx in universe) {
+        cell = universe[idx];
         neighbours = getNeighbours(universe, idx);
+
         if (neighbours > 1 && neighbours < 4) {
             next.push(cell);
         }

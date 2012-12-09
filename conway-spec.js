@@ -20,7 +20,7 @@ describe('Conway tests', function () {
         expect(doTick(univ)).toEqual([]);
     });
 
-    if('does not change', function () {
+    it('does not change', function () {
         var univ = [[0, 1], [0, 0], [1, 1]];
         expect(doTick(univ)).toEqual(univ);
     });
