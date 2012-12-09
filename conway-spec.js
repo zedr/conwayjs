@@ -19,5 +19,10 @@ describe('Conway tests', function () {
         var univ = [[0, 1]];
         expect(doTick(univ)).toEqual([]);
     });
+
+    if('does not change', function () {
+        var univ = [[0, 1], [0, 0], [1, 1]];
+        expect(doTick(univ)).toEqual(univ);
+    });
 });
 
