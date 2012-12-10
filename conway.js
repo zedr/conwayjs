@@ -1,50 +1,73 @@
-var universe = [];
-
-var getNeighbours = function (universe, idx) {
+var getNeighbours = function (universe, cell, dead) {
     "use strict";
 
-    var cell = universe[idx],
-        offset = [-1, 0, 1],
-        count = -1,
+    var 
+        count = 0,
         member,
-        el,
         a,
         b,
         x,
         y,
-        i;
+        i,
+        born = [];
 
-    for (a in offset) {
-        for (b in offset) {
-            var x = cell[0] + offset[a],
-                y = cell[1] + offset[b];
+    for (a = -1; a < 2; a++) {
+        for (b = -1; b < 2; b++) {
+            if (a === 0 && b === 0) continue;
+
+            var x = cell[0] + a,
+                y = cell[1] + b;
 
             for (i in universe) {
                 member = universe[i];
                 if (member[0] === x && member[1] === y) count++;
             };
+            
+            if (!dead && getNeighbours(universe, [x, y], 1)[0] === 3) {
+                born.push([x, y]);
+            }
         };
     };
 
-    return count;
+    return [count, born];
 };
 
 var doTick = function (universe) {
     "use strict";
 
     var cell,
+        ns = {},
         next = [],
         idx,
-        neighbours;
+        i,
+        result,
+        neighbours,
+        bCells,
+        born,
+        k,
+        v;
 
     for (idx in universe) {
         cell = universe[idx];
-        neighbours = getNeighbours(universe, idx);
+        result = getNeighbours(universe, cell);
+        neighbours = result[0];
+        bCells = result[1];
 
         if (neighbours > 1 && neighbours < 4) {
-            next.push(cell);
+            (ns[cell[0]] || (ns[cell[0]] = {}))[cell[1]] = true;
+        }
+
+        for (i in bCells) {
+            born = bCells[i];
+            (ns[born[0]] || (ns[born[0]] = {}))[born[1]] = true;
         }
     };
+
+    for (k in ns) {
+        for (v in ns[k]) {
+            next.push([+k, +v]);
+        }
+    }
 
     return next;
 };
