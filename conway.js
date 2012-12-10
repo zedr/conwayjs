@@ -13,18 +13,18 @@ var getNeighbours = function (universe, cell, dead) {
 
     for (a = -1; a < 2; a++) {
         for (b = -1; b < 2; b++) {
-            if (a === 0 && b === 0) continue;
+            if ( !(a === 0 && b === 0) ) {
+                var x = cell[0] + a,
+                    y = cell[1] + b;
 
-            var x = cell[0] + a,
-                y = cell[1] + b;
-
-            for (i in universe) {
-                member = universe[i];
-                if (member[0] === x && member[1] === y) count++;
-            };
-            
-            if (!dead && getNeighbours(universe, [x, y], 1)[0] === 3) {
-                born.push([x, y]);
+                for (i in universe) {
+                    member = universe[i];
+                    if (member[0] === x && member[1] === y) count++;
+                };
+                
+                if (!dead && getNeighbours(universe, [x, y], 1)[0] === 3) {
+                    born.push([x, y]);
+                }
             }
         };
     };
@@ -35,7 +35,8 @@ var getNeighbours = function (universe, cell, dead) {
 var doTick = function (universe) {
     "use strict";
 
-    var cell,
+    var 
+        cell,
         ns = {},
         next = [],
         idx,
