@@ -66,6 +66,7 @@
             key,
             val;
 
+        // Set an object using default keys.
         function setCoords (x, y) {
             (ns[x] || (ns[x] = {}))[y] = true;
         }
@@ -77,18 +78,22 @@
             neighbours = result[0];
             bornCells = result[1];
 
+            // Will the cell survive?
             if (neighbours > 1 && neighbours < 4) {
                 setCoords(cell[0], cell[1]);
             }
 
+            // If we have any cells to awaken, add them to the plane.
             for (i in bornCells) {
                 born = bornCells[i];
                 setCoords(born[0], born[1]);
             };
         };
 
+        // Reset the state.
         state = [];
 
+        // Iterate the namespace and add the new cells to the state.
         for (key in ns) {
             for (val in ns[key]) {
                state.push([+key, +val]);
