@@ -1,43 +1,79 @@
-var exports = require('./conway.js'),
-    getNeighbours = exports.getNeighbours,
-    doTick = exports.doTick;
+var universe = require('./conway.js').universe;
+
 
 describe('Conway tests', function () {
+    var univ = universe;
+
+    afterEach(function () {
+        univ.doReset();
+    });
+
+    it('can add a cell', function () {
+        univ.addCell([1, 1]);
+        expect(univ.getState()).toEqual([[1, 1]]);
+    });
+
+    it('can be resetted', function () {
+        univ.addCell([1, 1]);
+        univ.doReset();
+        expect(univ.getState()).toEqual([]);
+    });
+
     it('has no neighbours', function () {
-        var univ = [[0, 1]];
-        expect(getNeighbours(univ, univ[0])[0]).toEqual(0);
+        var cell = [1, 1]
+        univ.addCell(cell);
+        expect(univ.getNeighboursOf(cell)).toBe(0);
     });
 
     it('has two neighbours', function () {
-        var univ = [[0, 1], [1, 0], [9, 9]];
-        expect(getNeighbours(univ, univ[0])[0]).toEqual(1);
-        expect(getNeighbours(univ, univ[1])[0]).toEqual(1);
+        var seq = [[0, 1], [1, 0], [9, 9]],
+            i;
+        for (i in seq) { univ.addCell(seq[i]); }
+        expect(univ.getNeighboursOf(seq[0])).toBe(1);
+        expect(univ.getNeighboursOf(seq[1])).toBe(1);
+        expect(univ.getNeighboursOf(seq[2])).toBe(0);
     });
 
     it('has three neighbours', function () {
-        var univ = [[0, -2], [-1, -1], [0, -1], [1, -1], [1, 0], [0, 1]];
-        expect(getNeighbours(univ, univ[0])[0]).toEqual(3);
+        var seq = [[0, -2], [-1, -1], [0, -1], [1, -1], [1, 0], [0, 1]],
+            i;
+        for (i in seq) { univ.addCell(seq[i]); }
+        expect(univ.getNeighboursOf(seq[0])).toBe(3);
     });
 
     it('becomes empty', function () {
-        var univ1 = [[0, 1]];
-        expect(doTick(univ1)).toEqual([]);
-        var univ2 = [[0, 1], [1, 0], [9, 9]];
-        expect(doTick(univ2)).toEqual([]);
+        // Case 1
+        var state1 = [[0, 1]];
+        univ.setState(state1);
+        univ.doTick();
+        expect(univ.getState()).toEqual([]);
+        // Case 2
+        var state2= [[0, 1], [1, 0], [9, 9]];
+        univ.setState(state2);
+        univ.doTick();
+        expect(univ.getState()).toEqual([]);
     });
 
     it('has one more cell and then is stable', function () {
-        var u1 = [[0, 0], [0, 1], [1, 1]];
-        var u2 = [[ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ]]
-        var u3 = [[ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ]]
-        expect(doTick(u1)).toEqual(u2);
-        expect(doTick(u2)).toEqual(u3);
+        // Case 1
+        var state1 = [[0, 0], [0, 1], [1, 1]];
+        var state2 = [[ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ]]
+        univ.setState(state1);
+        univ.doTick();
+        expect(univ.getState()).toEqual(state2);
+        // Case 2
+        var state3 = [[ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ]]
+        univ.setState(state2);
+        univ.doTick();
+        expect(univ.getState()).toEqual(state3);
     });
 
-    it('is a glider', function () {
-        var u1 = [[1, 0], [0, 1], [-1, -1], [0, -1], [1, -1]]
-        var u2 = [[0, -1], [0, -2], [1, 0], [1, -1], [-1, 0]]
-        expect(doTick(u1)).toEqual(u2);
+    it('is and behaves as a glider', function () {
+        var state1 = [[1, 0], [0, 1], [-1, -1], [0, -1], [1, -1]]
+        var state2 = [[0, -1], [0, -2], [1, 0], [1, -1], [-1, 0]]
+        univ.setState(state1);
+        univ.doTick();
+        expect(univ.getState()).toEqual(state2);
     });
 });
 
