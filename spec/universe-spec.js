@@ -1,8 +1,8 @@
-var Conway = require('./conway.js').Conway;
+var Universe = require('../universe.js').Conway.Universe;
 
 
 describe('Conway tests', function () {
-    var univ = new Conway.Universe();
+    var univ = new Universe();
 
     afterEach(function () {
         univ.doReset();
