@@ -1,10 +1,14 @@
 (function (NS) {
     "use strict";
 
+    var 
+        pluginNS = "Conway";
+
     var Universe = function () {
 
         this.doReset = function () {
-            this.state = []
+            this.state = [];
+            this.generation = 1;
         };
 
         this.doReset();
@@ -105,9 +109,13 @@
                this.state.push([+key, +val]);
             };
         };
+
+        // Increment the generation number.
+        this.generation++;
+        console.log("ticked [" + this.generation + "]");
     };
 
     // Plugin registration
-    (NS['Conway'] || (NS['Conway'] = {}))['Universe'] = Universe;
+    (NS[pluginNS] || (NS[pluginNS] = {}))["Universe"] = Universe;
 
 }(this));
