@@ -1,14 +1,20 @@
 (function (NS) {
     "use strict";
 
-    var 
-        state = [];
+    var Universe = function () {
 
-    function addCell (cell) {
-        if (cell.length === 2) state.push(cell);
+        this.doReset = function () {
+            this.state = []
+        };
+
+        this.doReset();
     };
 
-    function checkNeighbours (cell, dead) {
+    Universe.prototype.addCell = function (cell) {
+        if (cell.length === 2) this.state.push(cell);
+    };
+
+    Universe.prototype.checkNeighbours = function (cell, dead) {
         var 
             count = 0,
             born = [],
@@ -34,14 +40,14 @@
                         y = cell[1] + b;
 
                     // Check if the universe contains it.
-                    for (i in state) {
-                        elem = state[i];
+                    for (i in this.state) {
+                        elem = this.state[i];
                         if (elem[0] === x && elem[1] === y) count++;
                     };
 
                     // Now recurse and check if any neighbours will become
                     // alive.
-                    if (!dead && checkNeighbours([x, y], 1)[0] === 3) {
+                    if (!dead && this.checkNeighbours([x, y], 1)[0] === 3) {
                         born.push([x, y]);
                     }
                 }
@@ -51,7 +57,7 @@
         return [count, born];
     };
     
-    function doTick () {
+    Universe.prototype.doTick = function () {
         var
             idx,
             cell,
@@ -72,9 +78,9 @@
         }
 
         // Iterate through the live cells in our plane.
-        for (idx in state) {
-            cell = state[idx];
-            result = checkNeighbours(cell);
+        for (idx in this.state) {
+            cell = this.state[idx];
+            result = this.checkNeighbours(cell);
             neighbours = result[0];
             bornCells = result[1];
 
@@ -91,37 +97,17 @@
         };
 
         // Reset the state.
-        state = [];
+        this.state = [];
 
         // Iterate the namespace and add the new cells to the state.
         for (key in ns) {
             for (val in ns[key]) {
-               state.push([+key, +val]);
+               this.state.push([+key, +val]);
             };
         };
     };
 
-    function doReset () {
-        state = [];
-    };
-
-    function getState () {
-        return state;
-    };
-
-    function setState(seq) {
-        state = seq
-    };
-
-    NS.universe = {
-        'addCell': addCell,
-        'doTick': doTick,
-        'doReset': doReset,
-        'getState': getState,
-        'setState': setState,
-        'getNeighboursOf': function (cell) {
-            return checkNeighbours(cell)[0]; 
-        }
-    };
+    // Plugin registration
+    (NS['Conway'] || (NS['Conway'] = {}))['Universe'] = Universe;
 
 }(this));
