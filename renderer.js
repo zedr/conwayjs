@@ -10,7 +10,6 @@
         var col = Math.floor(Math.random() * 16777215).toString(16),
             padding = Array(7 - col.length).join("0"),
             rgb = '#' + padding + col;
-            console.log(rgb);
         return rgb;
     };
 
@@ -22,6 +21,7 @@
             self = this;
 
         context = document.getElementById(targetId).getContext("2d");
+        this._context = context;
         this.universe = new Universe();
 
         var doRender = function () {
