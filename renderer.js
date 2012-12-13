@@ -5,19 +5,35 @@
         document = NS.document,
         Universe = NS[pluginNS].Universe;
 
+    var randomColor = function () {
+        // Demo function to test the canvas
+        var col = Math.floor(Math.random() * 16777215).toString(16);
+        return "#" + (Array(col.length + 1 - 7).join("0") + col);
+    };
+
     var Renderer = function (targetId) {
         var
             timer,
-            speed = 1000;
+            speed = 1000,
+            context,
+            self = this;
 
-        this.context = document.getElementById(targetId).getContext("2d");
+        context = document.getElementById(targetId).getContext("2d");
         this.universe = new Universe();
 
+        var doRender = function () {
+            /* render the canvas */
+            context.fillStyle = randomColor();
+            context.fillRect(0, 0, 150, 75);
+        };
+
+        var renderTick = function () {
+            self.universe.doTick();
+            doRender();
+        };
+
         this.start = function () {
-            var self = this;
-            timer = setInterval(function () {
-                self.universe.doTick()
-            }, speed); 
+            timer = setInterval(renderTick, speed); 
         };
 
         this.stop = function () {
