@@ -112,7 +112,7 @@
 
         // Increment the generation number.
         this.generation++;
-        console.log("ticked [" + this.generation + "]");
+        //console.log("ticked [" + this.generation + "]");
     };
 
     // Plugin registration

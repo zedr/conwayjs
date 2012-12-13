@@ -7,8 +7,9 @@
 
     var randomColor = function () {
         // Demo function to test the canvas
-        var col = Math.floor(Math.random() * 16777215).toString(16);
-        return "#" + (Array(col.length + 1 - 7).join("0") + col);
+        var col = Math.floor(Math.random() * 16777215).toString(16),
+            pad = (col.length) ? Array(col.length + 1 - 7).join("0") : "";
+        return "#" + pad + col;
     };
 
     var Renderer = function (targetId) {
