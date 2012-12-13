@@ -1,4 +1,5 @@
 var Universe = require('../universe.js').Conway.Universe;
+var Library = require('../library.js').Conway.Library;
 
 
 describe('Conway tests', function () {
@@ -70,8 +71,8 @@ describe('Conway tests', function () {
     });
 
     it('is and behaves as a glider', function () {
-        var state1 = [[1, 0], [0, 1], [-1, -1], [0, -1], [1, -1]]
-        var state2 = [[0, -1], [0, -2], [1, 0], [1, -1], [-1, 0]]
+        var state1 = Library['glider'];
+        var state2 = [[0, -1], [0, -2], [1, 0], [1, -1], [-1, 0]];
         univ.state = state1;
         univ.doTick();
         expect(univ.state).toEqual(state2);
