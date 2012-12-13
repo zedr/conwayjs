@@ -3,7 +3,8 @@
     var
         pluginNS = 'Conway',
         document = NS.document,
-        Universe = NS[pluginNS].Universe;
+        Universe = NS[pluginNS].Universe,
+        Library = NS[pluginNS].Library;
 
     var randomColor = function () {
         // Demo function to test the canvas
@@ -13,7 +14,7 @@
         return rgb;
     };
 
-    var Renderer = function (targetId) {
+    var CanvasRenderer = function (targetId) {
         var
             timer,
             speed = 1000,
@@ -23,6 +24,10 @@
         context = document.getElementById(targetId).getContext("2d");
         this._context = context;
         this.universe = new Universe();
+        
+        // Debug by loading a glider
+        this.universe.state = Library['glider'];
+        NS.console.log("Glider loaded");
 
         var doRender = function () {
             /* render the canvas */
@@ -45,6 +50,6 @@
     };
 
     // Plugin registration
-    (NS[pluginNS] || (NS[pluginNS] = {}))['Renderer'] = Renderer;
+    (NS[pluginNS] || (NS[pluginNS] = {}))['Renderer'] = CanvasRenderer;
 
 }(this));
