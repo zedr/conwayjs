@@ -8,8 +8,10 @@
     var randomColor = function () {
         // Demo function to test the canvas
         var col = Math.floor(Math.random() * 16777215).toString(16),
-            pad = (col.length) ? Array(col.length + 1 - 7).join("0") : "";
-        return "#" + pad + col;
+            padding = Array(7 - col.length).join("0"),
+            rgb = '#' + padding + col;
+            console.log(rgb);
+        return rgb;
     };
 
     var Renderer = function (targetId) {
