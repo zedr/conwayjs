@@ -21,32 +21,33 @@
             context,
             self = this;
 
-        context = document.getElementById(targetId).getContext("2d");
-        this._context = context;
+        this.context = document.getElementById(targetId).getContext("2d");
         this.universe = new Universe();
-        
-        // Debug by loading a glider
-        this.universe.state = Library['glider'];
-        NS.console.log("Glider loaded");
-
-        var doRender = function () {
-            /* render the canvas */
-            context.fillStyle = randomColor();
-            context.fillRect(0, 0, 150, 75);
-        };
-
-        var renderTick = function () {
-            self.universe.doTick();
-            doRender();
-        };
 
         this.start = function () {
-            timer = setInterval(renderTick, speed); 
+            timer = setInterval( function () { self.renderTick(); }, speed );
         };
 
         this.stop = function () {
             clearInterval(timer);
-        }
+        };
+    };
+
+    CanvasRenderer.prototype.doRender = function () {
+        /* render the canvas */
+        this.context.fillStyle = randomColor();
+        this.context.fillRect(0, 0, 150, 75);
+    };
+
+    CanvasRenderer.prototype.renderTick = function () {
+        this.universe.doTick();
+        this.doRender();
+    };
+
+    CanvasRenderer.prototype.init = function () {
+        // Debug by loading a glider
+        this.universe.state = Library['glider'];
+        NS.console.log("Glider loaded");
     };
 
     // Plugin registration
