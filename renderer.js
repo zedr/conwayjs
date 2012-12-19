@@ -32,9 +32,11 @@
         };
 
         this.setSpeed = function (val) {
-            speed = val;
-            this.stop();
-            this.start();
+            if (val > 0) {
+                this.stop();
+                speed = val;
+                this.start();
+            }
         };
     };
 
