@@ -12,11 +12,14 @@
   <![endif]-->  
   <style>
       #target { border: 1px #222 solid; }
+      #frame { width: 100%; height: 100%; overflow: scroll; }
   </style>
 </head>  
 <body>  
     <article>
-        <canvas id="target" width="200" height="100"></canvas>
+        <div id="frame">
+            <canvas id="target"></canvas>
+        </div>
     </article>
   <script src="universe.js"></script>  
   <script src="library.js"></script>  

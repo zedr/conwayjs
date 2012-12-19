@@ -18,9 +18,21 @@
         var
             timer,
             speed = 1000,
+            canvasWidth = 4000,
+            canvasHeight = 2000,
+            context,
+            frame,
             self = this;
 
-        this.context = document.getElementById(targetId).getContext("2d");
+        frame = document.getElementById(targetId);
+        frame.width = canvasWidth;
+        frame.height = canvasHeight;
+        context = target.getContext("2d");
+        context.width = canvasWidth;
+        context.height = canvasHeight;
+
+        this.frame = frame;
+        this.context = context;
         this.universe = new Universe();
 
         this.start = function () {
@@ -50,7 +62,7 @@
             x,
             y;
 
-        this.context.clearRect(0, 0, 150, 75);
+        this.context.clearRect(0, 0, this.frame.width, this.frame.height);
         this.context.fillStyle = randomColor();
 
         for (i=0; i < state_len; i++) {
@@ -69,7 +81,7 @@
 
     CanvasRenderer.prototype.addCritter = function (name) {
         // Debug by loading a glider
-        this.universe.state = Library[name];
+        this.universe.addCells(Library[name]);
         NS.console.log(name + " loaded.");
     };
 

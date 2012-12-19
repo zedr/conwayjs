@@ -18,6 +18,15 @@
         if (cell.length === 2) this.state.push(cell);
     };
 
+    Universe.prototype.addCells = function (sequence) {
+        var i,
+            len = sequence.length;
+
+        for (i=0; i < len; i++) {
+            this.addCell(sequence[i]);
+        }
+    };
+
     Universe.prototype.checkNeighbours = function (cell, dead) {
         var 
             count = 0,
@@ -112,7 +121,6 @@
 
         // Increment the generation number.
         this.generation++;
-        //console.log("ticked [" + this.generation + "]");
     };
 
     // Plugin registration
