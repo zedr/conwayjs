@@ -18,7 +18,6 @@
         var
             timer,
             speed = 1000,
-            context,
             self = this;
 
         this.context = document.getElementById(targetId).getContext("2d");
@@ -31,12 +30,34 @@
         this.stop = function () {
             clearInterval(timer);
         };
+
+        this.setSpeed = function (val) {
+            speed = val;
+            this.stop();
+            this.start();
+        };
     };
 
     CanvasRenderer.prototype.doRender = function () {
         /* render the canvas */
+        var
+            i,
+            state = this.universe.state,
+            state_len = this.universe.state.length,
+            cell,
+            x,
+            y;
+
+        this.context.clearRect(0, 0, 150, 75);
         this.context.fillStyle = randomColor();
-        this.context.fillRect(0, 0, 150, 75);
+
+        for (i=0; i < state_len; i++) {
+            cell = state[i];
+            x = cell[0]+50;
+            y = cell[1]+50;
+
+            this.context.fillRect(x, y, 1, 1);
+        }
     };
 
     CanvasRenderer.prototype.renderTick = function () {
