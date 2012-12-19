@@ -35,7 +35,9 @@
             b,
             x,
             y,
+            state = this.state,
             i,
+            len,
             elem;
         
         // Check the Moore neighbourhood of a cell,
@@ -53,8 +55,9 @@
                         y = cell[1] + b;
 
                     // Check if the universe contains it.
-                    for (i in this.state) {
-                        elem = this.state[i];
+                    len = state.length;
+                    for (i=0; i < len; i++) {
+                        elem = state[i];
                         if (elem[0] === x && elem[1] === y) count++;
                     };
 
@@ -81,7 +84,11 @@
             neighbours,
             bornCells,
             born,
+            state = this.state,
             i,
+            l,
+            stateLen,
+            cellsLen,
             key,
             val;
 
@@ -91,8 +98,9 @@
         }
 
         // Iterate through the live cells in our plane.
-        for (idx in this.state) {
-            cell = this.state[idx];
+        stateLen = state.length;
+        for (i=0; i < stateLen; i++) {
+            cell = this.state[i];
             result = this.checkNeighbours(cell);
             neighbours = result[0];
             bornCells = result[1];
@@ -103,8 +111,9 @@
             }
 
             // If we have any cells to awaken, add them to the plane.
-            for (i in bornCells) {
-                born = bornCells[i];
+            cellsLen = bornCells.length;
+            for (l=0; l < cellsLen; l++) {
+                born = bornCells[l];
                 setCoords(born[0], born[1]);
             };
         };
