@@ -67,10 +67,10 @@
         this.doRender();
     };
 
-    CanvasRenderer.prototype.init = function () {
+    CanvasRenderer.prototype.addCritter = function (name) {
         // Debug by loading a glider
-        this.universe.state = Library['glider'];
-        NS.console.log("Glider loaded");
+        this.universe.state = Library[name];
+        NS.console.log(name + " loaded.");
     };
 
     // Plugin registration
