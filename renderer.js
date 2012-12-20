@@ -14,26 +14,22 @@
         return rgb;
     };
 
-    var CanvasRenderer = function (targetId) {
+    var CanvasRenderer = function (targetId, width, height) {
         var
             timer,
             speed = 1000,
-            canvasWidth = 4000,
-            canvasHeight = 2000,
             context,
             frame,
             self = this;
 
-        frame = document.getElementById(targetId);
-        frame.width = canvasWidth;
-        frame.height = canvasHeight;
-        context = target.getContext("2d");
-        context.width = canvasWidth;
-        context.height = canvasHeight;
+        this.frame = document.getElementById(targetId);
 
-        this.frame = frame;
-        this.context = context;
-        this.universe = new Universe();
+        this.context = target.getContext("2d");
+
+        this.universe = new Universe(width || 3000, height || 3000);
+
+        this.frame.width = this.universe.width;
+        this.frame.height = this.universe.height;
 
         this.start = function () {
             timer = setInterval( function () { self.renderTick(); }, speed );

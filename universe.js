@@ -4,13 +4,15 @@
     var 
         pluginNS = "Conway";
 
-    var Universe = function () {
+    var Universe = function (width, height) {
 
         this.doReset = function () {
             this.state = [];
             this.generation = 1;
         };
 
+        this.width = width || 100;
+        this.height = height || 100;
         this.doReset();
     };
 
@@ -22,8 +24,8 @@
         var i,
             cell,
             len = sequence.length,
-            x = (x) ? x : 0,
-            y = (y) ? y : 0;
+            x = x || 0,
+            y = y || 0;
 
         for (i=0; i < len; i++) {
             cell = sequence[i];
