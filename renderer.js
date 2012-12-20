@@ -79,9 +79,8 @@
         this.doRender();
     };
 
-    CanvasRenderer.prototype.addCritter = function (name) {
-        // Debug by loading a glider
-        this.universe.addCells(Library[name]);
+    CanvasRenderer.prototype.addCritter = function (name, x, y) {
+        this.universe.addCells(Library[name], x, y);
         NS.console.log(name + " loaded.");
     };
 

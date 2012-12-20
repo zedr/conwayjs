@@ -18,12 +18,16 @@
         if (cell.length === 2) this.state.push(cell);
     };
 
-    Universe.prototype.addCells = function (sequence) {
+    Universe.prototype.addCells = function (sequence, x, y) {
         var i,
-            len = sequence.length;
+            cell,
+            len = sequence.length,
+            x = (x) ? x : 0,
+            y = (y) ? y : 0;
 
         for (i=0; i < len; i++) {
-            this.addCell(sequence[i]);
+            cell = sequence[i];
+            this.addCell([cell[0] + x, cell[1] + y]);
         }
     };
 

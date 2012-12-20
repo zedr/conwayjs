@@ -77,5 +77,13 @@ describe('Conway tests', function () {
         univ.doTick();
         expect(univ.state).toEqual(state2);
     });
+
+    it('can add a critter at a specific position', function () {
+        var critter = Library['glider'],
+            state = [[51, 50], [50, 51], [49, 49], [50, 49], [51, 49]];
+        univ.addCells(critter, 50, 50);
+
+        expect(univ.state).toEqual(state);
+    });
 });
 
