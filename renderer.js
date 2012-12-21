@@ -7,7 +7,7 @@
         Library = NS[pluginNS].Library;
 
     var randomColor = function () {
-        // Demo function to test the canvas
+        // Generate a random color
         var col = Math.floor(Math.random() * 16777215).toString(16),
             padding = Array(7 - col.length).join("0"),
             rgb = '#' + padding + col;
@@ -31,8 +31,13 @@
         this.frame.width = this.universe.width;
         this.frame.height = this.universe.height;
 
+        var renderTick = function () {
+            self.universe.doTick();
+            self.doRender();
+        };
+
         this.start = function () {
-            timer = setInterval( function () { self.renderTick(); }, speed );
+            timer = setInterval(renderTick, speed );
         };
 
         this.stop = function () {
@@ -68,11 +73,6 @@
 
             this.context.fillRect(x, y, 1, 1);
         }
-    };
-
-    CanvasRenderer.prototype.renderTick = function () {
-        this.universe.doTick();
-        this.doRender();
     };
 
     CanvasRenderer.prototype.addCritter = function (name, x, y) {
