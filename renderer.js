@@ -6,7 +6,7 @@
         Universe = NS[pluginNS].Universe,
         Library = NS[pluginNS].Library;
 
-    var randomColor = function () {
+    var getRandomColor = function () {
         // Generate a random color
         var col = Math.floor(Math.random() * 16777215).toString(16),
             padding = Array(7 - col.length).join("0"),
@@ -64,7 +64,7 @@
             y;
 
         this.context.clearRect(0, 0, this.frame.width, this.frame.height);
-        this.context.fillStyle = randomColor();
+        this.context.fillStyle = getRandomColor();
 
         for (i=0; i < state_len; i++) {
             cell = state[i];
